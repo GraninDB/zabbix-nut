@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>5.2</version>
-    <date>2022-09-10T21:02:45Z</date>
+    <version>6.0</version>
+    <date>2023-02-12T15:52:12Z</date>
     <groups>
         <group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
             <name>Templates</name>
         </group>
     </groups>
     <templates>
         <template>
+            <uuid>66db0d93f7db49df82795b7c84e6595e</uuid>
             <template>Template_NUT</template>
             <name>Template_NUT</name>
             <groups>
@@ -16,47 +18,38 @@
                     <name>Templates</name>
                 </group>
             </groups>
-            <applications>
-                <application>
-                    <name>NUT</name>
-                </application>
-                <application>
-                    <name>NUT Raw</name>
-                </application>
-            </applications>
             <items>
                 <item>
+                    <uuid>37cd3fb868f1495d94eb1fae15e4720c</uuid>
                     <name>NUT JSON</name>
                     <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                     <history>0</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
-                    <applications>
-                        <application>
-                            <name>NUT Raw</name>
-                        </application>
-                    </applications>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>NUT Raw</value>
+                        </tag>
+                    </tags>
                 </item>
             </items>
             <discovery_rules>
                 <discovery_rule>
+                    <uuid>756cd95a82c142c6a31a8cb822ad15bb</uuid>
                     <name>Discover UPS</name>
                     <type>DEPENDENT</type>
                     <key>nut.discovery</key>
                     <delay>0</delay>
                     <item_prototypes>
                         <item_prototype>
+                            <uuid>814dfff7e0a849d99dc9bb72909c516d</uuid>
                             <name>{#UPS_NAME} - Battery Charge</name>
                             <type>DEPENDENT</type>
                             <key>nut.battery.charge[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>%</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -68,31 +61,35 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{last()}&lt;{$NUT_CHARGE_CRIT}</expression>
+                                    <uuid>592a30a96cba45258655bc2d2d7c13c8</uuid>
+                                    <expression>last(/Template_NUT/nut.battery.charge[&quot;{#UPS_NAME}&quot;])&lt;{$NUT_CHARGE_CRIT}</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; charge is critical: {ITEM.LASTVALUE}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{last()}&lt;{$NUT_CHARGE_LOW}</expression>
+                                    <uuid>a0a6165848f14a83a50491593a76cc51</uuid>
+                                    <expression>last(/Template_NUT/nut.battery.charge[&quot;{#UPS_NAME}&quot;])&lt;{$NUT_CHARGE_LOW}</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; charge is low: {ITEM.LASTVALUE}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>cb072d43a2de4beda1172b0ba8c9ec2a</uuid>
                             <name>{#UPS_NAME} - Battery Voltage</name>
                             <type>DEPENDENT</type>
                             <key>nut.battery.voltage[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>V</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -104,19 +101,21 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>1a5b06b7cc524feb8ff4367c55ebc2bf</uuid>
                             <name>{#UPS_NAME} - Input Frequency</name>
                             <type>DEPENDENT</type>
                             <key>nut.input.freq[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>Hz</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -128,19 +127,21 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>c2ca49006397432db02520f91dc103f2</uuid>
                             <name>{#UPS_NAME} - Input Voltage</name>
                             <type>DEPENDENT</type>
                             <key>nut.input.voltage[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>V</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -152,26 +153,29 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{min(120)}&gt;={$NUT_VOLTAGE_HIGH} or {max(120)}&lt;={$NUT_VOLTAGE_LOW}</expression>
+                                    <uuid>4376fdf85d41472086f0a211febbb396</uuid>
+                                    <expression>min(/Template_NUT/nut.input.voltage[&quot;{#UPS_NAME}&quot;],120s)&gt;={$NUT_VOLTAGE_HIGH} or max(/Template_NUT/nut.input.voltage[&quot;{#UPS_NAME}&quot;],120s)&lt;={$NUT_VOLTAGE_LOW}</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; voltage is out of bounds: {ITEM.LASTVALUE}</name>
                                     <priority>AVERAGE</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>12742ae255134ff0a229cb0b10a5e85c</uuid>
                             <name>{#UPS_NAME} - Load</name>
                             <type>DEPENDENT</type>
                             <key>nut.load[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>%</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -183,31 +187,35 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{last()}&gt;{$NUT_LOAD_CRIT}</expression>
+                                    <uuid>15a04d5550864adea70a4dc4c2ec9f57</uuid>
+                                    <expression>last(/Template_NUT/nut.load[&quot;{#UPS_NAME}&quot;])&gt;{$NUT_LOAD_CRIT}</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; load is critical: {ITEM.LASTVALUE}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{last()}&gt;{$NUT_LOAD_HIGH}</expression>
+                                    <uuid>f6a6136a4eb9493ca7b01965c2c727f6</uuid>
+                                    <expression>last(/Template_NUT/nut.load[&quot;{#UPS_NAME}&quot;])&gt;{$NUT_LOAD_HIGH}</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; load is high: {ITEM.LASTVALUE}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>460294a4d84440958082dd3d518b284c</uuid>
                             <name>{#UPS_NAME} - Output Voltage</name>
                             <type>DEPENDENT</type>
                             <key>nut.output.voltage[&quot;{#UPS_NAME}&quot;]</key>
                             <delay>0</delay>
                             <value_type>FLOAT</value_type>
                             <units>V</units>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <preprocessing>
                                 <step>
                                     <type>JSONPATH</type>
@@ -219,8 +227,15 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                         </item_prototype>
                         <item_prototype>
+                            <uuid>b4c0abe536ce48e181accdf589fb6757</uuid>
                             <name>{#UPS_NAME} - Status</name>
                             <type>DEPENDENT</type>
                             <key>nut.status[&quot;{#UPS_NAME}&quot;]</key>
@@ -228,11 +243,6 @@
                             <history>7d</history>
                             <trends>0</trends>
                             <value_type>CHAR</value_type>
-                            <applications>
-                                <application>
-                                    <name>NUT</name>
-                                </application>
-                            </applications>
                             <valuemap>
                                 <name>NUT UPS Status</name>
                             </valuemap>
@@ -247,30 +257,87 @@
                             <master_item>
                                 <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
                             </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
-                                    <expression>{last()}=&quot;CAL&quot;</expression>
+                                    <uuid>ce6cc6926c764a04aaf0ed3f5d5428a0</uuid>
+                                    <expression>last(/Template_NUT/nut.status[&quot;{#UPS_NAME}&quot;])=&quot;CAL&quot;</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; status is calibrating</name>
                                     <priority>INFO</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{last()}=&quot;CHRG&quot;</expression>
+                                    <uuid>34bf3478cfb34346bca179fcab7febb1</uuid>
+                                    <expression>last(/Template_NUT/nut.status[&quot;{#UPS_NAME}&quot;])=&quot;CHRG&quot;</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; status is charging</name>
                                     <priority>INFO</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{last()}=&quot;BYPASS&quot;</expression>
+                                    <uuid>75728ef685fd4a24951efc682f98684a</uuid>
+                                    <expression>last(/Template_NUT/nut.status[&quot;{#UPS_NAME}&quot;])=&quot;BYPASS&quot;</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; status is in bypass</name>
                                     <priority>WARNING</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{regexp({$NUT_STATUS_OK})}=0</expression>
+                                    <uuid>12165f3dcae44374a715dd0d51e27dcd</uuid>
+                                    <expression>find(/Template_NUT/nut.status[&quot;{#UPS_NAME}&quot;],,&quot;regexp&quot;,&quot;{$NUT_STATUS_OK}&quot;)=0</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; status is not healthy: {ITEM.LASTVALUE}</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
-                                    <expression>{last()}=&quot;OB&quot;</expression>
+                                    <uuid>adc0538efc8546c8ae254bddeda180f4</uuid>
+                                    <expression>last(/Template_NUT/nut.status[&quot;{#UPS_NAME}&quot;])=&quot;OB&quot;</expression>
                                     <name>UPS &quot;{#UPS_NAME}&quot; status is on battery</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>aab9afc54a5b4185bdacaeeda04422b7</uuid>
+                            <name>{#UPS_NAME} - Temperature</name>
+                            <type>DEPENDENT</type>
+                            <key>nut.temperature[&quot;{#UPS_NAME}&quot;]</key>
+                            <delay>0</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>C</units>
+                            <preprocessing>
+                                <step>
+                                    <type>JSONPATH</type>
+                                    <parameters>
+                                        <parameter>$.vars['{#UPS_NAME}']['ups.temperature']</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>nut[&quot;{$NUT_HOST}&quot;, &quot;{$NUT_PORT}&quot;, &quot;{$NUT_USERNAME}&quot;, &quot;{$NUT_PASSWORD}&quot;]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>NUT</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>973fdc3574a944689e4eb6dda67e160c</uuid>
+                                    <expression>last(/Template_NUT/nut.temperature[&quot;{#UPS_NAME}&quot;])&gt;{$NUT_TEMP_CRIT}</expression>
+                                    <name>UPS &quot;{#UPS_NAME}&quot; temperature is critical: {ITEM.LASTVALUE}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>82bfe0bcbffc434fbf6f570b9ecdb6d1</uuid>
+                                    <expression>last(/Template_NUT/nut.temperature[&quot;{#UPS_NAME}&quot;])&gt;{$NUT_TEMP_HIGH}</expression>
+                                    <name>UPS &quot;{#UPS_NAME}&quot; temperature is high: {ITEM.LASTVALUE}</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>5fde1298392a41b4b6bb2e5a1b1705d3</uuid>
+                                    <expression>last(/Template_NUT/nut.temperature[&quot;{#UPS_NAME}&quot;])&lt;{$NUT_TEMP_LOW}</expression>
+                                    <name>UPS &quot;{#UPS_NAME}&quot; temperature is low: {ITEM.LASTVALUE}</name>
                                     <priority>AVERAGE</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
@@ -346,6 +413,11 @@
                     <description>Temperature high threshold</description>
                 </macro>
                 <macro>
+                    <macro>{$NUT_TEMP_LOW}</macro>
+                    <value>1</value>
+                    <description>Temperature low threshold</description>
+                </macro>
+                <macro>
                     <macro>{$NUT_USERNAME}</macro>
                     <description>Username to use (leave empty to disable auth)</description>
                 </macro>
@@ -360,77 +432,78 @@
                     <description>Low voltage bound</description>
                 </macro>
             </macros>
+            <valuemaps>
+                <valuemap>
+                    <uuid>b8fa834c9ee94fb78e6894efab359ec6</uuid>
+                    <name>NUT UPS Status</name>
+                    <mappings>
+                        <mapping>
+                            <value>BOOST</value>
+                            <newvalue>Boosting Voltage</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>BYPASS</value>
+                            <newvalue>Bypass</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>CAL</value>
+                            <newvalue>Calibrating</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>CHRG</value>
+                            <newvalue>Charging</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>CP</value>
+                            <newvalue>Cable Power</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>DISCHRG</value>
+                            <newvalue>Discharging</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>FSD</value>
+                            <newvalue>Forced Shutdown</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>LB</value>
+                            <newvalue>Low Battery</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>none</value>
+                            <newvalue>Unknown</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>OB</value>
+                            <newvalue>On Battery</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>OFF</value>
+                            <newvalue>Load Off</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>OL</value>
+                            <newvalue>Online</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>OVER</value>
+                            <newvalue>Overloaded</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>RB</value>
+                            <newvalue>Replace Battery</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>SD</value>
+                            <newvalue>Shutdown Load</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>TRIM</value>
+                            <newvalue>Trimming Voltage</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+            </valuemaps>
         </template>
     </templates>
-    <value_maps>
-        <value_map>
-            <name>NUT UPS Status</name>
-            <mappings>
-                <mapping>
-                    <value>BOOST</value>
-                    <newvalue>Boosting Voltage</newvalue>
-                </mapping>
-                <mapping>
-                    <value>BYPASS</value>
-                    <newvalue>Bypass</newvalue>
-                </mapping>
-                <mapping>
-                    <value>CAL</value>
-                    <newvalue>Calibrating</newvalue>
-                </mapping>
-                <mapping>
-                    <value>CHRG</value>
-                    <newvalue>Charging</newvalue>
-                </mapping>
-                <mapping>
-                    <value>CP</value>
-                    <newvalue>Cable Power</newvalue>
-                </mapping>
-                <mapping>
-                    <value>DISCHRG</value>
-                    <newvalue>Discharging</newvalue>
-                </mapping>
-                <mapping>
-                    <value>FSD</value>
-                    <newvalue>Forced Shutdown</newvalue>
-                </mapping>
-                <mapping>
-                    <value>LB</value>
-                    <newvalue>Low Battery</newvalue>
-                </mapping>
-                <mapping>
-                    <value>none</value>
-                    <newvalue>Unknown</newvalue>
-                </mapping>
-                <mapping>
-                    <value>OB</value>
-                    <newvalue>On Battery</newvalue>
-                </mapping>
-                <mapping>
-                    <value>OFF</value>
-                    <newvalue>Load Off</newvalue>
-                </mapping>
-                <mapping>
-                    <value>OL</value>
-                    <newvalue>Online</newvalue>
-                </mapping>
-                <mapping>
-                    <value>OVER</value>
-                    <newvalue>Overloaded</newvalue>
-                </mapping>
-                <mapping>
-                    <value>RB</value>
-                    <newvalue>Replace Battery</newvalue>
-                </mapping>
-                <mapping>
-                    <value>SD</value>
-                    <newvalue>Shutdown Load</newvalue>
-                </mapping>
-                <mapping>
-                    <value>TRIM</value>
-                    <newvalue>Trimming Voltage</newvalue>
-                </mapping>
-            </mappings>
-        </value_map>
-    </value_maps>
 </zabbix_export>
